@@ -1,20 +1,18 @@
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.image.*;
-import java.io.File;
 import java.io.IOException;
 
 public class GamePanel extends JPanel implements Runnable {
+	private static final long serialVersionUID = 1L;
 	//Variables
-	public static int WIDTH = 1680;
-	public static int HEIGHT = 1050;
+	public static int WIDTH = 1920;
+	public static int HEIGHT = 1920;
 	
 	private Thread thread;
 	private boolean running;
 	
 	private BufferedImage image;
-	private Image img = ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/grass_32.png"));
 	private Graphics2D g;
 	private Map m;
 	
@@ -95,11 +93,12 @@ public class GamePanel extends JPanel implements Runnable {
 
 	private void gameRender() {
 		g.setColor(Color.RED);
+		//drawing the map
 		for (int i = 0; i < 60; i++ )
 		{
 			for (int j = 0; j < 60; j++ )
 			{
-				g.drawImage(img, i*32, j*32, null);
+				g.drawImage(m.getTile(i, j).getTerrain().getTexture(), i*32, j*32, null);
 			}
 		}
 		g.drawString("FPS: " + averageFPS, 10, 10);

@@ -15,7 +15,15 @@ public class Map {
 		for( int i = 0; i < 60; i++){
 			temp = new ArrayList<Tile>(0);
 			for (int j = 0; j <60; j++){
-				temp.add( new Tile());
+				if (j % 2 == 1 && i % 2 == 1)
+				{
+					temp.add( new Tile(i, j, 1));
+				}
+				else
+				{
+					temp.add( new Tile(i, j, 0));
+				}
+				
 			}
 			grid.add(temp);
 		}
