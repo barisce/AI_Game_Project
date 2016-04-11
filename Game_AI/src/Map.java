@@ -1,0 +1,30 @@
+import java.io.IOException;
+import java.util.ArrayList; 
+
+
+public class Map {
+	
+	// properties
+	private ArrayList<ArrayList<Tile>> grid;
+	
+	// Constructor
+	public Map() throws IOException{
+		grid = new ArrayList<ArrayList<Tile>>(0);
+		ArrayList<Tile> temp;
+		
+		for( int i = 0; i < 60; i++){
+			temp = new ArrayList<Tile>(0);
+			for (int j = 0; j <60; j++){
+				temp.add( new Tile());
+			}
+			grid.add(temp);
+		}
+	}
+	
+	// Methods
+	
+	public Tile getTile( int x, int y){
+		ArrayList<Tile> temp = grid.get(x);
+		return temp.get(y);
+	}
+}
