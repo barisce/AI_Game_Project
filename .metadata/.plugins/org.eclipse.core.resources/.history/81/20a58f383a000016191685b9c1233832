@@ -1,7 +1,5 @@
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.*;
 import java.io.IOException;
 
@@ -10,8 +8,6 @@ public class GamePanel extends JPanel implements Runnable {
 	//Variables
 	public static int WIDTH = 1920;
 	public static int HEIGHT = 1920;
-	
-	private Tile selectedTile = null;
 	
 	private Thread thread;
 	private boolean running;
@@ -30,29 +26,9 @@ public class GamePanel extends JPanel implements Runnable {
 		setFocusable(true);
 		requestFocus();
 		m = new Map();
-		addMouseListener (new MouseAdapter() 
-		{
-			public void mousePressed(MouseEvent e) 
-			{
-				int x = e.getX();
-				int y = e.getY();
-				System.out.println("x: " + x/32 + ", y: " + y/32);
-				//get the tile at the specific coordinate
-				setSelectedTile( m.getTile(x/32, y/32));
-			}
-		});
 	}
 	
 	//Functions
-	public Tile getSelectedTile() {
-		return selectedTile;
-	}
-
-	public void setSelectedTile(Tile selectedTile) {
-		this.selectedTile = selectedTile;
-	}
-	
-	
 	public void addNotify() {
 		super.addNotify();
 		if (thread == null) {

@@ -11,8 +11,6 @@ public class GamePanel extends JPanel implements Runnable {
 	public static int WIDTH = 1920;
 	public static int HEIGHT = 1920;
 	
-	private Tile selectedTile = null;
-	
 	private Thread thread;
 	private boolean running;
 	
@@ -36,23 +34,12 @@ public class GamePanel extends JPanel implements Runnable {
 			{
 				int x = e.getX();
 				int y = e.getY();
-				System.out.println("x: " + x/32 + ", y: " + y/32);
-				//get the tile at the specific coordinate
-				setSelectedTile( m.getTile(x/32, y/32));
+				System.out.println("x: " + x + ", y: " + y);
 			}
 		});
 	}
 	
 	//Functions
-	public Tile getSelectedTile() {
-		return selectedTile;
-	}
-
-	public void setSelectedTile(Tile selectedTile) {
-		this.selectedTile = selectedTile;
-	}
-	
-	
 	public void addNotify() {
 		super.addNotify();
 		if (thread == null) {
