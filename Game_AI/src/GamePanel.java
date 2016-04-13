@@ -1,30 +1,114 @@
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
+	private static final long serialVersionUID = 1L;
 	//Variables
-	public static int WIDTH = 400;
-	public static int HEIGHT = 400;
+	public static int WIDTH = 1920;
+	public static int HEIGHT = 1920;
+	
+	private Tile selectedTile = null;
 	
 	private Thread thread;
 	private boolean running;
 	
 	private BufferedImage image;
 	private Graphics2D g;
+	private Map m;
 	
 	private int FPS = 60;
 	private double averageFPS;
 	
+	
+	private ArrayList<Image> texture;
+	
 	//Constructor
-	public GamePanel() {
+	public GamePanel() throws IOException {
 		super();
 		setPreferredSize(new Dimension (WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();
+		m = new Map();
+		addMouseListener (new MouseAdapter() 
+		{
+			public void mousePressed(MouseEvent e) 
+			{
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("x: " + x/32 + ", y: " + y/32);
+				//get the tile at the specific coordinate
+				setSelectedTile( m.getTile(x/32, y/32));
+			}
+		});
+		
+		
+	}
+	
+	public GamePanel(Map ma) throws IOException {
+		//super();
+		texture = new ArrayList<Image>();
+		texture.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/grass_32.png")));
+		texture.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/snow_32.png")));
+		System.out.println("other constructor");
+		setPreferredSize(new Dimension (WIDTH, HEIGHT));
+		setFocusable(true);
+		requestFocus();
+		this.m = ma;
+		for(int i = 0;i<60;i++){
+			for(int j = 0;j<60;j++){
+				System.out.print(""+m.getTile(i, j).getType()+" ");
+			}
+			System.out.print("\n");
+		}
+		
+		
+		
+		addMouseListener (new MouseAdapter() 
+		{
+			public void mousePressed(MouseEvent e) 
+			{
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("x: " + x/32 + ", y: " + y/32);
+				//get the tile at the specific coordinate
+				setSelectedTile( m.getTile(x/32, y/32));
+				if(m.getTile(x/32, y/32).getType()==1){
+					try {
+						m.getTile(x/32, y/32).setType(0);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}else{
+					try {
+						m.getTile(x/32, y/32).setType(1);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				
+			}
+		});
 	}
 	
 	//Functions
+	public Tile getSelectedTile() {
+		return selectedTile;
+	}
+
+	public void setSelectedTile(Tile selectedTile) {
+		this.selectedTile = selectedTile;
+	}
+	
+	
 	public void addNotify() {
 		super.addNotify();
 		if (thread == null) {
@@ -81,6 +165,14 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 
+	public Map getM() {
+		return m;
+	}
+
+	public void setM(Map m) {
+		this.m = m;
+	}
+
 	private void gameDraw() {
 		
 		
@@ -88,10 +180,20 @@ public class GamePanel extends JPanel implements Runnable {
 
 
 	private void gameRender() {
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.RED);
+		//drawing the map
+		for (int i = 0; i < 60; i++ )
+		{
+			for (int j = 0; j < 60; j++ )
+			{
+				//g.drawImage(m.getTile(i, j).getTerrain().getTexture(), i*32, j*32, null);
+				g.drawImage(texture.get(m.getTile(i, j).getType()), i*32, j*32, null);
+			}
+		}
 		g.drawString("FPS: " + averageFPS, 10, 10);
+		//draw all tiles
+		
+		
 	}
 
 

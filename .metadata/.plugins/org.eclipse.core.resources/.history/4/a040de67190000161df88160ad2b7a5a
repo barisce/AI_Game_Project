@@ -1,0 +1,13 @@
+import java.io.IOException;
+
+public class MapControl {
+	// properties
+	private GameMap gameMap;
+	// constructors
+	
+	public MapControl() throws IOException{
+		gameMap = new GameMap();
+	}
+	
+	// methods
+}

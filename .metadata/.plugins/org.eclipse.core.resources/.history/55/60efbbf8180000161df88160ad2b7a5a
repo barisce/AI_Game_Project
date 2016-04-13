@@ -1,0 +1,19 @@
+
+import java.util.Random;
+
+
+public class FightController {
+	Random ran = new Random();
+	
+	
+	public FightController(){
+		
+	}
+	
+	public int FightMelee(Unit Attacker, Entity Defender){
+		int atDa = Attacker.getDamage();
+		int cal = ran.nextInt(100)+50;
+		return (atDa*cal)/100;
+		
+	}
+}

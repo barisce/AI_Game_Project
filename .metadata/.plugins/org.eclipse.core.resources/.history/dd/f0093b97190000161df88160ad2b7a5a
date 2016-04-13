@@ -1,0 +1,26 @@
+import java.io.IOException;
+import java.util.ArrayList; 
+
+public class Tile {
+	// Properties
+	
+	private Terrain terrain;
+	// Constructors
+	
+	public Tile() throws IOException{
+		terrain = new Terrain();
+	}
+	
+	public Tile(Terrain terrain){
+		this.terrain= terrain;
+	}
+	// Methods
+	// Getter
+	
+	public Terrain getTerrain(){
+		return terrain;
+	}
+	
+	// modifiers
+	
+}
