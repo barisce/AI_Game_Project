@@ -11,9 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import c461a.GamePanel;
-import c461a.Map;
-
 public class GameControllers extends JFrame {
 	GamePanel gamePanel;
 	public Map m;
