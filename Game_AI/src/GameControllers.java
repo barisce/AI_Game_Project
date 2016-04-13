@@ -1,12 +1,18 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import c461a.GamePanel;
+import c461a.Map;
 
 public class GameControllers extends JFrame {
 	GamePanel gamePanel;
@@ -22,10 +28,10 @@ public class GameControllers extends JFrame {
 	
 	
 	public GameControllers() throws IOException{
-		Map m = new Map();
-		m.setTileType(1, 0, 1);
+		final Map m = new Map();
+		m.setTileType(5, 5, 1);
 		
-		Map m2  = new Map(1);
+		final Map m2  = new Map(1);
 		
 		
 		final JPanel panel = new JPanel();
@@ -48,12 +54,48 @@ public class GameControllers extends JFrame {
 		add(panel, BorderLayout.EAST);
         add(scroll, BorderLayout.CENTER);
         setVisible(true);
-		
+        
+        JButton neutral_map = new JButton("Map");
+        neutral_map.addActionListener(new ActionListener() {
+        	 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                System.out.println("You clicked neutral map");
+                gamePanel.setM(m);
+            }
+        });      
+ 
+        JButton p1_map = new JButton("Player1 Map");
+        p1_map.addActionListener(new ActionListener() {
+       	 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                System.out.println("You clicked Player 1");
+                gamePanel.setM(m2);
+            }
+        }); 
+        
+        JButton p2_map = new JButton("Player2 Map");
+        p2_map.addActionListener(new ActionListener() {
+       	 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                System.out.println("You clicked Player 2");
+            }
+        }); 
+        
+        panel.add(neutral_map);
+        panel.add(p1_map);
+        panel.add(p2_map);
+        
         pack();
 		
 		setResizable(false);
 		setLocationRelativeTo(null);
-		gamePanel.setM(m2);
+		//gamePanel.setM(m2);
 		
 	}
 	
