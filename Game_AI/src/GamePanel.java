@@ -28,6 +28,8 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	
 	private ArrayList<Image> texture;
+	private ArrayList<Image> ownership;
+	private ArrayList<Image> entities;
 	
 	//Constructor
 	public GamePanel() throws IOException {
@@ -56,6 +58,10 @@ public class GamePanel extends JPanel implements Runnable {
 		texture = new ArrayList<Image>();
 		texture.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/grass_32.png")));
 		texture.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/snow_32.png")));
+		ownership.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/Player1.png")));
+		ownership.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/Player2.png")));
+		entities.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/town.png")));
+		
 		System.out.println("other constructor");
 		setPreferredSize(new Dimension (WIDTH, HEIGHT));
 		setFocusable(true);
@@ -188,6 +194,8 @@ public class GamePanel extends JPanel implements Runnable {
 			{
 				//g.drawImage(m.getTile(i, j).getTerrain().getTexture(), i*32, j*32, null);
 				g.drawImage(texture.get(m.getTile(i, j).getType()), i*32, j*32, null);
+				//g.drawImage(texture.get(3), i*32, j*32, null);
+				//g.drawImage(texture.get(2), i*32, j*32, null);
 			}
 		}
 		g.drawString("FPS: " + averageFPS, 10, 10);
