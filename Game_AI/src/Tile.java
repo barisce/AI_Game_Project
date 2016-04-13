@@ -6,31 +6,32 @@ public class Tile {
 	public int y;
 	public int type;
 	
-	private Terrain terrain;
+	//private Terrain terrain;
 	// Constructors
 	
 	public Tile() throws IOException{
-		terrain = new Terrain();
+		//terrain = new Terrain();
 	}
 	
 	public Tile(int x, int y) throws IOException{
-		terrain = new Terrain();
+		//terrain = new Terrain();
 		this.x = x;
 		this.y = y;
 	}
 	
 	public Tile(int x, int y, int type) throws IOException{
-		terrain = new Terrain(type);
+		//terrain = new Terrain(type);
 		this.x = x;
 		this.y = y;
+		this.type = type;
 	}
 	
 	public Tile(int type) throws IOException{
-		terrain = new Terrain(type);
+		//terrain = new Terrain(type);
 	}
 
 	public Tile(Terrain terrain){
-		this.terrain= terrain;
+		//this.terrain= terrain;
 	}
 	// Methods
 	// Getter
@@ -50,21 +51,22 @@ public class Tile {
 	public void setY(int y) {
 		this.y = y;
 	}
-
+/*
 	public void setTerrain(Terrain terrain) {
-		this.terrain = terrain;
+		//this.terrain = terrain;
 	}
 	
 	public Terrain getTerrain(){
-		return terrain;
+		//return terrain;
 	}
-	
+*/	
 	public int getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(int type) throws IOException {
 		this.type = type;
+		//this.terrain = new Terrain(type);
 	}
 	
 	// modifiers

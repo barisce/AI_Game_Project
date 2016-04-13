@@ -1,46 +1,10 @@
-
 import java.io.IOException;
 import java.awt.*;
 import javax.swing.*;
 
-public class GameMain extends JFrame {
+public class GameMain {
 	
-	private static final long serialVersionUID = 1L;
 	
-	public static final int WIDTH = 1280;
-	public static final int HEIGHT = 720;
-	public static final int SCALE = 1;
-	public static final String NAME = "Game";
-	
-	public GameMain() throws HeadlessException, IOException
-	{
-		final JPanel panel = new JPanel();
-		panel.setBorder(BorderFactory.createLineBorder(Color.black));
-		panel.setPreferredSize(new Dimension(400, 720));
-		
-		final GamePanel gamePanel = new GamePanel();
-		gamePanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		gamePanel.setPreferredSize(new Dimension(1920, 1920));
-
-        final JScrollPane scroll = new JScrollPane(gamePanel);
-
-		setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
-		
-		add(panel, BorderLayout.EAST);
-        add(scroll, BorderLayout.CENTER);
-        setVisible(true);
-		
-        pack();
-		
-		setResizable(false);
-		setLocationRelativeTo(null);
-
-	}
 	
 	public static void main(String[] args)  throws Exception {
         
@@ -49,7 +13,7 @@ public class GameMain extends JFrame {
             public void run() 
             {
 				try {
-					new GameMain().setVisible(true);
+					new GameControllers().setVisible(true);
 				} catch (HeadlessException | IOException e) {
 					e.printStackTrace();
 				}

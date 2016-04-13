@@ -10,22 +10,22 @@ public class Terrain {
 	
 	public Terrain () throws IOException
 	{
-		texture = ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/grass_32.png"));
+		texture = ImageIO.read(new File("C:/Users/Ubeyd/Desktop/DERS/CS 461/assets/grass_32.png"));
 	}
 	
 	public Terrain (int type) throws IOException
 	{
 		if (type == 0) // grass
 		{
-			texture = ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/grass_32.png"));
+			texture = ImageIO.read(new File("C:/Users/Ubeyd/Desktop/DERS/CS 461/assets/grass_32.png"));
 		}
 		else if (type == 1) // snow
 		{
-			texture = ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/snow_32.png"));
+			texture = ImageIO.read(new File("C:/Users/Ubeyd/Desktop/DERS/CS 461/assets/snow_32.png"));
 		}
 		else //default
 		{
-			texture = ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/grass_32.png"));
+			texture = ImageIO.read(new File("C:/Users/Ubeyd/Desktop/DERS/CS 461/assets/grass_32.png"));
 		}
 	}
 

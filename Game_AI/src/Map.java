@@ -28,6 +28,18 @@ public class Map {
 			grid.add(temp);
 		}
 	}
+	public Map(int x) throws IOException{
+		grid = new ArrayList<ArrayList<Tile>>(0);
+		ArrayList<Tile> temp;
+		
+		for( int i = 0; i < 60; i++){
+			temp = new ArrayList<Tile>(0);
+			for (int j = 0; j <60; j++){
+				temp.add(new Tile(i,j,x));
+			}
+			grid.add(temp);
+		}
+	}
 	
 	// Methods
 	
@@ -35,4 +47,9 @@ public class Map {
 		ArrayList<Tile> temp = grid.get(x);
 		return temp.get(y);
 	}
+	public void setTileType(int x, int y, int type) throws IOException{
+		grid.get(x).get(y).setType(type);
+		System.out.println(""+x+" "+y+"has been set to"+type);
+	}
+	
 }
