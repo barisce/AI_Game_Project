@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -25,7 +26,6 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	private int FPS = 60;
 	private double averageFPS;
-	
 	
 	private ArrayList<Image> texture;
 	private ArrayList<Image> ownership;
@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		});
 		
-		
+		setSelectedTile(new Tile(61, 61, 100));
 	}
 	
 	public GamePanel(Map ma) throws IOException {
@@ -59,13 +59,42 @@ public class GamePanel extends JPanel implements Runnable {
 		ownership = new ArrayList<Image>();
 		entities = new ArrayList<Image>();
 		
-		texture.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/grass.png")));
-		texture.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/snow.png")));
-		ownership.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/Player1.png")));
-		ownership.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/Player2.png")));
-		entities.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/town.png")));
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream input = classLoader.getResourceAsStream("grass.png");
+		texture.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("snow.png");
+		texture.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("forest.png");
+		texture.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("forest_depleted.png");
+		texture.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("Player1.png");
+		ownership.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("Player2.png");
+		ownership.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("town.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("tower.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("warrior.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("worker.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("archer.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("barracks.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("cavalry.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("mine1.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("mine2.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("siege.png");
+		entities.add(ImageIO.read(input));
+		input = classLoader.getResourceAsStream("tile_improvement.png");
+		entities.add(ImageIO.read(input));
 		
-		System.out.println("other constructor");
 		setPreferredSize(new Dimension (WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();
@@ -77,7 +106,7 @@ public class GamePanel extends JPanel implements Runnable {
 			System.out.print("\n");
 		}
 		
-		
+		setSelectedTile(new Tile(61, 61, 100));
 		
 		addMouseListener (new MouseAdapter() 
 		{
@@ -88,18 +117,19 @@ public class GamePanel extends JPanel implements Runnable {
 				System.out.println("x: " + x/32 + ", y: " + y/32);
 				//get the tile at the specific coordinate
 				setSelectedTile( m.getTile(x/32, y/32));
+				//send tile to GameControllers
+				
+				
 				if(m.getTile(x/32, y/32).getType()==1){
 					try {
 						m.getTile(x/32, y/32).setType(0);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}else{
 					try {
 						m.getTile(x/32, y/32).setType(1);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -203,8 +233,6 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		g.drawString("FPS: " + averageFPS, 10, 10);
 		//draw all tiles
-		
-		
 	}
 
 
