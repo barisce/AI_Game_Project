@@ -1,0 +1,100 @@
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+public class GameControllers extends JFrame {
+	GamePanel gamePanel;
+	public Map m;
+	public Map m2;
+	private static final long serialVersionUID = 1L;
+	
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
+	public static final double SCALE = 1;
+	public static final String NAME = "Game";
+	
+	
+	
+	public GameControllers() throws IOException{
+		final Map m = new Map();
+		m.setTileType(5, 5, 1);
+		
+		final Map m2  = new Map(1);
+		
+		
+		final JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel.setPreferredSize(new Dimension(400, 720));
+		
+		final GamePanel gamePanel = new GamePanel(m);
+		gamePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		gamePanel.setPreferredSize(new Dimension(1920, 1920));
+
+        final JScrollPane scroll = new JScrollPane(gamePanel);
+
+		setMinimumSize(new Dimension((int)(WIDTH * SCALE), (int)(HEIGHT * SCALE)));
+		setMaximumSize(new Dimension((int)(WIDTH * SCALE), (int)(HEIGHT * SCALE)));
+		setPreferredSize(new Dimension((int)(WIDTH * SCALE), (int)(HEIGHT * SCALE)));
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+		
+		add(panel, BorderLayout.EAST);
+        add(scroll, BorderLayout.CENTER);
+        setVisible(true);
+        
+        JButton neutral_map = new JButton("Map");
+        neutral_map.addActionListener(new ActionListener() {
+        	 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                System.out.println("You clicked neutral map");
+                gamePanel.setM(m);
+            }
+        });      
+ 
+        JButton p1_map = new JButton("Player1 Map");
+        p1_map.addActionListener(new ActionListener() {
+       	 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                System.out.println("You clicked Player 1");
+                gamePanel.setM(m2);
+            }
+        }); 
+        
+        JButton p2_map = new JButton("Player2 Map");
+        p2_map.addActionListener(new ActionListener() {
+       	 
+            public void actionPerformed(ActionEvent e)
+            {
+                //Execute when button is pressed
+                System.out.println("You clicked Player 2");
+            }
+        }); 
+        
+        panel.add(neutral_map);
+        panel.add(p1_map);
+        panel.add(p2_map);
+        
+        pack();
+		
+		setResizable(false);
+		setLocationRelativeTo(null);
+		//gamePanel.setM(m2);
+		
+	}
+	
+}
