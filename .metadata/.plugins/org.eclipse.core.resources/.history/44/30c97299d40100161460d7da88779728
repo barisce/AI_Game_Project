@@ -1,0 +1,218 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+public class GameControllers extends JFrame {
+	GamePanel gamePanel;
+	public Map m;
+	public Map m2;
+	private static final long serialVersionUID = 1L;
+	
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
+	public static final double SCALE = 1;
+	public static final String NAME = "Game";
+	
+	
+	public GameControllers() throws IOException{
+		final Map m = new Map();
+		m.setTileType(5, 5, 1);
+		
+		final Map m2  = new Map(1);
+		
+		
+		final JPanel panel = new JPanel();
+		panel.setPreferredSize(new Dimension(400, 720));
+		
+		final GamePanel gamePanel = new GamePanel(m);
+		gamePanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		gamePanel.setPreferredSize(new Dimension(1920, 1920));
+
+        final JScrollPane scroll = new JScrollPane(gamePanel);
+
+		setMinimumSize(new Dimension((int)(WIDTH * SCALE), (int)(HEIGHT * SCALE)));
+		setMaximumSize(new Dimension((int)(WIDTH * SCALE), (int)(HEIGHT * SCALE)));
+		setPreferredSize(new Dimension((int)(WIDTH * SCALE), (int)(HEIGHT * SCALE)));
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new BorderLayout());
+		
+		add(panel, BorderLayout.EAST);
+        add(scroll, BorderLayout.CENTER);
+        setVisible(true);
+        
+        
+        // Variables declaration
+    	javax.swing.JButton end_turn;
+        javax.swing.JSeparator jSeparator1;
+        javax.swing.JSeparator jSeparator2;
+        javax.swing.JButton neutral_map;
+        javax.swing.JButton next_move;
+        javax.swing.JButton player1_map;
+        javax.swing.JButton player2_map;
+        javax.swing.JLabel player_info;
+        javax.swing.JLabel tile_info;
+        // End of variables declaration
+//        JButton neutral_map = new JButton("Map");
+//        neutral_map.addActionListener(new ActionListener() {
+//        	 
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                //Execute when button is pressed
+//                System.out.println("You clicked neutral map");
+//                gamePanel.setM(m);
+//            }
+//        });      
+// 
+//        JButton p1_map = new JButton("Player1 Map");
+//        p1_map.addActionListener(new ActionListener() {
+//       	 
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                //Execute when button is pressed
+//                System.out.println("You clicked Player 1");
+//                gamePanel.setM(m2);
+//            }
+//        }); 
+//        
+//        JButton p2_map = new JButton("Player2 Map");
+//        p2_map.addActionListener(new ActionListener() {
+//       	 
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                //Execute when button is pressed
+//                System.out.println("You clicked Player 2");
+//            }
+//        }); 
+//        
+//        panel.add(neutral_map);
+//        panel.add(p1_map);
+//        panel.add(p2_map);
+//        
+        
+        next_move = new javax.swing.JButton();
+        end_turn = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        player2_map = new javax.swing.JButton();
+        neutral_map = new javax.swing.JButton();
+        player1_map = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JSeparator();
+        tile_info = new javax.swing.JLabel();
+        player_info = new javax.swing.JLabel();
+
+        panel.setMinimumSize(new java.awt.Dimension(400, 720));
+        panel.setPreferredSize(new java.awt.Dimension(400, 720));
+
+        next_move.setText("Next Move");
+        next_move.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
+            }
+        });
+
+        end_turn.setText("End Turn");
+        end_turn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
+            }
+        });
+
+        player2_map.setText("Player2 Map");
+        player2_map.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
+            }
+        });
+
+        neutral_map.setText("Neutral Map");
+        neutral_map.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
+            }
+        });
+
+        player1_map.setText("Player1 Map");
+        player1_map.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                
+            }
+        });
+
+        tile_info.setText("Tile info at x: 1, y: 2");
+
+        player_info.setText("Player X: ");
+
+        //Need to add external JAR swing.jar to project buildpath to work! it is in the assets folder.
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(panel);
+        panel.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(78, 78, 78)
+                .add(next_move)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(end_turn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(53, 53, 53))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator1)
+            .add(jSeparator2)
+            .add(layout.createSequentialGroup()
+                .add(32, 32, 32)
+                .add(tile_info, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 329, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(player_info, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(layout.createSequentialGroup()
+                        .add(neutral_map)
+                        .add(18, 18, 18)
+                        .add(player1_map)
+                        .add(18, 18, 18)
+                        .add(player2_map)))
+                .add(43, 43, 43))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .add(28, 28, 28)
+                .add(tile_info, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
+                .add(18, 18, 18)
+                .add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(18, 18, 18)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(player1_map)
+                    .add(player2_map)
+                    .add(neutral_map))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(player_info, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 224, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jSeparator1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(end_turn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(next_move, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(26, 26, 26))
+        );
+        
+        
+        
+        
+        
+        pack();
+		
+		setResizable(false);
+		setLocationRelativeTo(null);
+		//gamePanel.setM(m2);
+		
+	}
+	
+}

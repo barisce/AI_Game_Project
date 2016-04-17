@@ -7,6 +7,7 @@ import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import Models.*;
 
 public class GamePanel extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -14,14 +15,14 @@ public class GamePanel extends JPanel implements Runnable {
 	public static int WIDTH = 1920;
 	public static int HEIGHT = 1920;
 	
-	private Tile selectedTile = null;
-	
 	private Thread thread;
 	private boolean running;
 	
 	private BufferedImage image;
 	private Graphics2D g;
 	private Map m;
+	
+	private Tile selectedTile = new Tile();
 	
 	private int FPS = 60;
 	private double averageFPS;
@@ -56,11 +57,32 @@ public class GamePanel extends JPanel implements Runnable {
 	public GamePanel(Map ma) throws IOException {
 		//super();
 		texture = new ArrayList<Image>();
-		texture.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/grass_32.png")));
-		texture.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/snow_32.png")));
-		ownership.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/Player1.png")));
-		ownership.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/Player2.png")));
-		entities.add(ImageIO.read(new File("C:/Users/Barýþ/Desktop/AI_Game_Project/Game_AI/assets/town.png")));
+		ownership = new ArrayList<Image>();
+		entities = new ArrayList<Image>();
+		
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/empty.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/grass.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/snow.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/forest.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/forest_depleted.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine_small.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine_big.png")));
+		ownership.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/empty.png")));
+		ownership.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/Player1.png")));
+		ownership.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/Player2.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/empty.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/town.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/tower.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/warrior.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/worker.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/archer.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/barracks.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/cavalry.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine1.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine2.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/siege.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/tile_improvement.png")));
+		
 		
 		System.out.println("other constructor");
 		setPreferredSize(new Dimension (WIDTH, HEIGHT));
@@ -85,21 +107,6 @@ public class GamePanel extends JPanel implements Runnable {
 				System.out.println("x: " + x/32 + ", y: " + y/32);
 				//get the tile at the specific coordinate
 				setSelectedTile( m.getTile(x/32, y/32));
-				if(m.getTile(x/32, y/32).getType()==1){
-					try {
-						m.getTile(x/32, y/32).setType(0);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}else{
-					try {
-						m.getTile(x/32, y/32).setType(1);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
 				
 			}
 		});
@@ -192,10 +199,9 @@ public class GamePanel extends JPanel implements Runnable {
 		{
 			for (int j = 0; j < 60; j++ )
 			{
-				//g.drawImage(m.getTile(i, j).getTerrain().getTexture(), i*32, j*32, null);
 				g.drawImage(texture.get(m.getTile(i, j).getType()), i*32, j*32, null);
-				//g.drawImage(texture.get(3), i*32, j*32, null);
-				//g.drawImage(texture.get(2), i*32, j*32, null);
+				g.drawImage(ownership.get(m.getTile(i, j).getOwner()), i*32, j*32, null);
+				g.drawImage(entities.get(m.getTile(i, j).getEntity()), i*32, j*32, null);
 			}
 		}
 		g.drawString("FPS: " + averageFPS, 10, 10);
