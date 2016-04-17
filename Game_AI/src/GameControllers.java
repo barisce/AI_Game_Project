@@ -1,4 +1,12 @@
+import Controllers.*;
+import Models.*;
+
 public class GameControllers extends javax.swing.JFrame {
+	GamePanelTest gamePanel;
+	PlayerController playerCont;
+	TurnController turnCont;
+	AIController ai;
+	public Map m;
 	private static final long serialVersionUID = 1L;
 	
 	public static final int WIDTH = 1280;
@@ -7,11 +15,14 @@ public class GameControllers extends javax.swing.JFrame {
 	public static final String NAME = "Game";
 	
 	
+	
 	public GameControllers() throws java.io.IOException{
-		final Map m = new Map();
-		m.setTileType(5, 5, 1);
-		Tile t;
-		final Map m2  = new Map(1);
+		playerCont = new PlayerController("test");
+		turnCont = new TurnController();
+		ai = new AIController();
+		
+		final Map m = new Map(System.getProperty("user.dir") + "/assets/map1.txt", 0);
+		
 		
 		final javax.swing.JPanel panel = new javax.swing.JPanel();
 		panel.setPreferredSize(new java.awt.Dimension(400, 720));
@@ -19,7 +30,7 @@ public class GameControllers extends javax.swing.JFrame {
 		final GamePanel gamePanel = new GamePanel(m);
 		gamePanel.setPreferredSize(new java.awt.Dimension(1920, 1920));
 
-        final javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(gamePanel);
+		final javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(gamePanel);
 
 		setMinimumSize(new java.awt.Dimension((int)(WIDTH * SCALE), (int)(HEIGHT * SCALE)));
 		setMaximumSize(new java.awt.Dimension((int)(WIDTH * SCALE), (int)(HEIGHT * SCALE)));
@@ -32,18 +43,19 @@ public class GameControllers extends javax.swing.JFrame {
         add(scroll, java.awt.BorderLayout.CENTER);
         setVisible(true);  
         
-        // Variables declaration
+     // Variables declaration
     	javax.swing.JButton end_turn;
         javax.swing.JButton next_move;
     	javax.swing.JScrollPane jScrollPane1;
         javax.swing.JScrollPane jScrollPane2;
         javax.swing.JSeparator jSeparator1;
-        javax.swing.JSeparator jSeparator2;
         javax.swing.JButton neutral_map;
         javax.swing.JButton player1_map;
         javax.swing.JButton player2_map;
         javax.swing.JTextArea player_info;
         javax.swing.JTextArea tile_info;
+        javax.swing.JButton refresh;
+        javax.swing.JTextPane turn_log;
         // End of variables declaration
         
         next_move = new javax.swing.JButton();
@@ -52,16 +64,20 @@ public class GameControllers extends javax.swing.JFrame {
         player2_map = new javax.swing.JButton();
         neutral_map = new javax.swing.JButton();
         player1_map = new javax.swing.JButton();
-        jSeparator2 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         tile_info = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         player_info = new javax.swing.JTextArea();
+        refresh = new javax.swing.JButton();
+        turn_log = new javax.swing.JTextPane();
 
         next_move.setText("Next Move");
         next_move.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	System.out.println("You clicked Next Move");
+            	
+            	turn_log.setText("dfsadfas\nsadas\ndsf");
+                jScrollPane2.setViewportView(turn_log);
             }
         });
 
@@ -74,8 +90,13 @@ public class GameControllers extends javax.swing.JFrame {
 
         player2_map.setText("Player2 Map");
         player2_map.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	System.out.println("You clicked Player 2");
+        	public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                MapUpdate(playerCont.getEntityContainer(1),m);
+                
+                String playerInfo = "Player X: ";
+                player_info.setText(playerInfo);
+                jScrollPane2.setViewportView(player_info);
             }
         });
 
@@ -83,32 +104,49 @@ public class GameControllers extends javax.swing.JFrame {
         neutral_map.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	System.out.println("You clicked neutral map");
-                gamePanel.setM(m);
+                
+                String playerInfo = "Player X: ";
+                player_info.setText(playerInfo);
+                jScrollPane2.setViewportView(player_info);
             }
         });
 
         player1_map.setText("Player1 Map");
         player1_map.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	System.out.println("You clicked Player 1");
-                gamePanel.setM(m2);
+        	public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                boolean re = ai.checkMove(2, 2, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
+                if(re){
+                	System.out.println("Bastýðýn yere gider");
+                }else{
+                	System.out.println("Gidemez");
+                }
+                
+                String playerInfo = "Player X: ";
+                player_info.setText(playerInfo);
+                jScrollPane2.setViewportView(player_info);
             }
         });
 
+        refresh.setText("Refresh");
+        refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	System.out.println("You clicked Refresh");
+            	panel.revalidate();
+            	Tile t;
+            	t = gamePanel.getSelectedTile();
+            	String tileInfo = "\nTile info at x: 1, y: 2\nHealth : " + t.getHitpoint()*t.getType() + "\nI got the tile. \nIt works!";
+                tile_info.setText(tileInfo);
+                jScrollPane1.setViewportView(tile_info);
+                
+            }
+        });
+        
+        
+        
+        turn_log.setEditable(false);
         tile_info.setEditable(false);
         player_info.setEditable(false);
-        
-        //TODO: problem is this tile is set only once. We need to set this frequently...
-        t = gamePanel.getSelectedTile();
-        
-        String tileInfo = "\nTile info at x: 1, y: 2\nHealth : " + t.getType() + "\nI got the tile. \nBut only for once! No update here :(";
-        tile_info.setText(tileInfo);
-        jScrollPane1.setViewportView(tile_info);
-
-        String playerInfo = "Player X: ";
-        player_info.setText(playerInfo);
-        jScrollPane2.setViewportView(player_info);
-
         
         //Need to add external JAR swing.jar to project buildpath to work! it is in the assets folder.
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(panel);
@@ -116,7 +154,6 @@ public class GameControllers extends javax.swing.JFrame {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(org.jdesktop.layout.GroupLayout.TRAILING, jSeparator1)
-                .add(jSeparator2)
                 .add(layout.createSequentialGroup()
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                         .add(layout.createSequentialGroup()
@@ -132,18 +169,19 @@ public class GameControllers extends javax.swing.JFrame {
                             .add(18, 18, 18)
                             .add(player2_map)))
                     .add(43, 43, 43))
+                .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1)
                 .add(layout.createSequentialGroup()
                     .add(jScrollPane2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 400, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(0, 0, Short.MAX_VALUE))
-                .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1)
+                .add(refresh, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             );
             layout.setVerticalGroup(
                 layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                 .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
-                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                    .add(jSeparator2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 10, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(18, 18, 18)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 286, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                    .add(refresh, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 33, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(player1_map)
                         .add(player2_map)
@@ -156,13 +194,26 @@ public class GameControllers extends javax.swing.JFrame {
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(end_turn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(next_move, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(26, 26, 26))
+                    .addContainerGap(57, Short.MAX_VALUE))
             );
         
         pack();
 		
 		setResizable(false);
 		setLocationRelativeTo(null);
+		//gamePanel.setM(m2);
+		
+	}
+	
+	public PlayerController getPlayerControlelr(){
+		return this.playerCont;
+	}
+	void MapUpdate(EntityContainer e, Map m){
+		int size = e.getSize();
+		for(int i = 0;i<size;i++){
+			m.getTile(e.getEntityFromIndex(i).getX(), e.getEntityFromIndex(i).getY()).setOwner(e.getEntityFromIndex(i).getOwner());
+			m.getTile(e.getEntityFromIndex(i).getX(), e.getEntityFromIndex(i).getY()).setEntity(e.getEntityFromIndex(i).getEntityType());
+		}
 	}
 	
 }

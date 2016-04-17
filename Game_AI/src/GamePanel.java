@@ -6,16 +6,14 @@ import java.awt.event.MouseEvent;
 import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import Models.*;
 
 public class GamePanel extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
 	//Variables
 	public static int WIDTH = 1920;
 	public static int HEIGHT = 1920;
-	
-	private Tile selectedTile = null;
 	
 	private Thread thread;
 	private boolean running;
@@ -24,8 +22,11 @@ public class GamePanel extends JPanel implements Runnable {
 	private Graphics2D g;
 	private Map m;
 	
+	private Tile selectedTile = new Tile();
+	
 	private int FPS = 60;
 	private double averageFPS;
+	
 	
 	private ArrayList<Image> texture;
 	private ArrayList<Image> ownership;
@@ -50,7 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		});
 		
-		setSelectedTile(new Tile(61, 61, 100));
+		
 	}
 	
 	public GamePanel(Map ma) throws IOException {
@@ -59,42 +60,31 @@ public class GamePanel extends JPanel implements Runnable {
 		ownership = new ArrayList<Image>();
 		entities = new ArrayList<Image>();
 		
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream input = classLoader.getResourceAsStream("grass.png");
-		texture.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("snow.png");
-		texture.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("forest.png");
-		texture.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("forest_depleted.png");
-		texture.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("Player1.png");
-		ownership.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("Player2.png");
-		ownership.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("town.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("tower.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("warrior.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("worker.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("archer.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("barracks.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("cavalry.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("mine1.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("mine2.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("siege.png");
-		entities.add(ImageIO.read(input));
-		input = classLoader.getResourceAsStream("tile_improvement.png");
-		entities.add(ImageIO.read(input));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/empty.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/grass.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/snow.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/forest.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/forest_depleted.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine_small.png")));
+		texture.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine_big.png")));
+		ownership.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/empty.png")));
+		ownership.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/Player1.png")));
+		ownership.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/Player2.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/empty.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/town.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/tower.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/warrior.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/worker.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/archer.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/barracks.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/cavalry.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine1.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine2.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/siege.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/tile_improvement.png")));
 		
+		
+		System.out.println("other constructor");
 		setPreferredSize(new Dimension (WIDTH, HEIGHT));
 		setFocusable(true);
 		requestFocus();
@@ -106,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
 			System.out.print("\n");
 		}
 		
-		setSelectedTile(new Tile(61, 61, 100));
+		
 		
 		addMouseListener (new MouseAdapter() 
 		{
@@ -117,22 +107,6 @@ public class GamePanel extends JPanel implements Runnable {
 				System.out.println("x: " + x/32 + ", y: " + y/32);
 				//get the tile at the specific coordinate
 				setSelectedTile( m.getTile(x/32, y/32));
-				//send tile to GameControllers
-				
-				
-				if(m.getTile(x/32, y/32).getType()==1){
-					try {
-						m.getTile(x/32, y/32).setType(0);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}else{
-					try {
-						m.getTile(x/32, y/32).setType(1);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
 				
 			}
 		});
@@ -225,14 +199,15 @@ public class GamePanel extends JPanel implements Runnable {
 		{
 			for (int j = 0; j < 60; j++ )
 			{
-				//g.drawImage(m.getTile(i, j).getTerrain().getTexture(), i*32, j*32, null);
 				g.drawImage(texture.get(m.getTile(i, j).getType()), i*32, j*32, null);
-				//g.drawImage(ownership.get(1), i*32, j*32, null);
-				//g.drawImage(entities.get(0), i*32, j*32, null);
+				g.drawImage(ownership.get(m.getTile(i, j).getOwner()), i*32, j*32, null);
+				g.drawImage(entities.get(m.getTile(i, j).getEntity()), i*32, j*32, null);
 			}
 		}
 		g.drawString("FPS: " + averageFPS, 10, 10);
 		//draw all tiles
+		
+		
 	}
 
 
