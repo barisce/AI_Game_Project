@@ -72,7 +72,7 @@ public class GameControllerTest extends JFrame {
                 gamePanel.setM(m);
             }
         });      
-
+ 
         JButton p1_map = new JButton("TEST MOVE");
         p1_map.addActionListener(new ActionListener() {
        	 

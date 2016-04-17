@@ -79,7 +79,7 @@ public class GameControllers extends javax.swing.JFrame {
             	System.out.println("You clicked Next Move");
             	
             	turn_log.setText("dfsadfas\nsadas\ndsf");
-                jScrollPane3.setViewportView(turn_log);
+                jScrollPane2.setViewportView(turn_log);
             }
         });
 
@@ -98,7 +98,7 @@ public class GameControllers extends javax.swing.JFrame {
                 
                 String playerInfo = "Player X: ";
                 player_info.setText(playerInfo);
-                jScrollPane3.setViewportView(player_info);
+                jScrollPane2.setViewportView(player_info);
             }
         });
 
@@ -109,7 +109,7 @@ public class GameControllers extends javax.swing.JFrame {
                 
                 String playerInfo = "Player X: ";
                 player_info.setText(playerInfo);
-                jScrollPane3.setViewportView(player_info);
+                jScrollPane2.setViewportView(player_info);
             }
         });
 
@@ -126,7 +126,7 @@ public class GameControllers extends javax.swing.JFrame {
                 
                 String playerInfo = "Player X: ";
                 player_info.setText(playerInfo);
-                jScrollPane3.setViewportView(player_info);
+                jScrollPane2.setViewportView(player_info);
             }
         });
 

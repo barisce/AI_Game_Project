@@ -20,7 +20,6 @@ public class GameControllerTest extends JFrame {
 	PlayerController playerCont;
 	TurnController turnCont;
 	AIController ai;
-	MoveController mc;
 	public Map m;
 	private static final long serialVersionUID = 1L;
 	
@@ -35,10 +34,10 @@ public class GameControllerTest extends JFrame {
 		playerCont = new PlayerController("test");
 		turnCont = new TurnController();
 		ai = new AIController();
-		mc = new MoveController();
+		
 		
 		//final Map m = new Map(0);
-		final Map m = new Map(System.getProperty("user.dir") + "/assets/map1.txt", 0);
+		final Map m = new Map("C:/Users/Ubeyd/workspace/AI/assets/map1.txt", 0);
 		
 		
 		final JPanel panel = new JPanel();
@@ -72,13 +71,13 @@ public class GameControllerTest extends JFrame {
                 gamePanel.setM(m);
             }
         });      
-
+ 
         JButton p1_map = new JButton("TEST MOVE");
         p1_map.addActionListener(new ActionListener() {
        	 
             public void actionPerformed(ActionEvent e)
             {
-                boolean re = mc.MoveToCoor(5, 8, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
+                boolean re = ai.checkMove(6, 6, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
                 if(re){
                 	System.out.println("Bastýðýn yere gider");
                 }else{

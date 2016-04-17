@@ -72,13 +72,13 @@ public class GameControllerTest extends JFrame {
                 gamePanel.setM(m);
             }
         });      
-
+ 
         JButton p1_map = new JButton("TEST MOVE");
         p1_map.addActionListener(new ActionListener() {
        	 
             public void actionPerformed(ActionEvent e)
             {
-                boolean re = mc.MoveToCoor(5, 8, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
+                boolean re = mc.MoveToCoor(5, 6, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
                 if(re){
                 	System.out.println("Bastýðýn yere gider");
                 }else{

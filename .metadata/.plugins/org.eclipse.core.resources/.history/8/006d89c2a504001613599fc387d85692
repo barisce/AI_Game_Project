@@ -38,7 +38,7 @@ public class GameControllerTest extends JFrame {
 		mc = new MoveController();
 		
 		//final Map m = new Map(0);
-		final Map m = new Map(System.getProperty("user.dir") + "/assets/map1.txt", 0);
+		final Map m = new Map("C:/Users/Ubeyd/workspace/AI/assets/map1.txt", 0);
 		
 		
 		final JPanel panel = new JPanel();
@@ -72,13 +72,13 @@ public class GameControllerTest extends JFrame {
                 gamePanel.setM(m);
             }
         });      
-
+ 
         JButton p1_map = new JButton("TEST MOVE");
         p1_map.addActionListener(new ActionListener() {
        	 
             public void actionPerformed(ActionEvent e)
             {
-                boolean re = mc.MoveToCoor(5, 8, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
+                boolean re = mc.MoveToCoor(2, 9, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
                 if(re){
                 	System.out.println("Bastýðýn yere gider");
                 }else{
