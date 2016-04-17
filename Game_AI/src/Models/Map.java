@@ -3,12 +3,12 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList; 
-
+import c461a.EntityModels.*;
 
 public class Map {
 	// properties
 	private ArrayList<ArrayList<Tile>> grid;
-	
+	private ArrayList<Mine> mineList;
 	// Constructor
 	
 	public Map(String mapURL, int a) throws IOException{
@@ -41,6 +41,9 @@ public class Map {
 				if(map.charAt((i*60)+j)=='g'){
 					temp.add(new Tile(i,j,1));
 				}
+				else if(map.charAt((i*60)+j)=='s'){
+					temp.add(new Tile(i,j,2));
+				}
 				else if(map.charAt((i*60)+j)=='f'){
 					temp.add(new Tile(i,j,3));
 				}
@@ -65,7 +68,21 @@ public class Map {
 		}
 	}
 	
-	
+	public Map(Map m) throws IOException{
+		grid = new ArrayList<ArrayList<Tile>>(0);
+		ArrayList<Tile> temp;
+		for( int i = 0; i < 60; i++){
+			temp = new ArrayList<Tile>(0);
+			for (int j = 0; j <60; j++){
+				Tile t = new Tile(i,j);
+				t.setType(m.getTile(i, j).getType());
+				t.setFound(false);
+				temp.add(t);
+			}
+			grid.add(temp);
+		}
+	}
+
 	public Map() throws IOException{
 		grid = new ArrayList<ArrayList<Tile>>(0);
 		ArrayList<Tile> temp;
@@ -86,6 +103,7 @@ public class Map {
 			grid.add(temp);
 		}
 	}
+	
 	public Map(int x) throws IOException{
 		grid = new ArrayList<ArrayList<Tile>>(0);
 		ArrayList<Tile> temp;
@@ -98,6 +116,7 @@ public class Map {
 			grid.add(temp);
 		}
 	}
+	
 	public Map(String s) throws IOException{
 		grid = new ArrayList<ArrayList<Tile>>(0);
 		ArrayList<Tile> temp;
@@ -128,10 +147,30 @@ public class Map {
 		return grid.get(x).get(y);
 		
 	}
+	
 	public void setTileType(int x, int y, int type) throws IOException{
 		
 		grid.get(x).get(y).setType(type);
 		System.out.println(""+x+" "+y+"has been set to"+type);
+	}
+	
+	public ArrayList<ArrayList<Tile>> getGrid() {
+		return grid;
+	}
+
+	public int getNumberOfMines() {
+		// TODO Auto-generated method stub
+		return mineList.size();
+	}
+
+	public Mine getMine(int i) {
+		// TODO Auto-generated method stub
+		return mineList.get(i);
+	}
+
+	public void addInfluence(int x, int y, int i, int player) {
+		grid.get(x).get(y).addInfluence(i, player);
+		
 	}
 	
 }

@@ -78,8 +78,8 @@ public class GameControllers extends javax.swing.JFrame {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	System.out.println("You clicked Next Move");
             	
-            	turn_log.setText("dfsadfas\nsadas\ndsf");
-                jScrollPane3.setViewportView(turn_log);
+            	turn_log.setText("Player 1 moved archer1 to x:15 y:19 and attacked to Player 2 warrior at x:16 y:19\nWhat a move\nReally");
+                jScrollPane2.setViewportView(turn_log);
             }
         });
 
@@ -87,6 +87,9 @@ public class GameControllers extends javax.swing.JFrame {
         end_turn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	System.out.println("You clicked End Turn");
+            	
+            	turn_log.setText("Player 1 moved archer1 to x:15 y:19 and attacked to Player 2 warrior at x:16 y:19\nPlayer 1 built a tile improvement at x:25 y:40\nPlayer 1 ends turn.");
+                jScrollPane2.setViewportView(turn_log);
             }
         });
 
@@ -94,11 +97,8 @@ public class GameControllers extends javax.swing.JFrame {
         player2_map.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                MapUpdate(playerCont.getEntityContainer(1),m);
-                
-                String playerInfo = "Player X: ";
-                player_info.setText(playerInfo);
-                jScrollPane3.setViewportView(player_info);
+        		MapUpdate(playerCont.getEntityContainer(2),m);
+        		MapUpdate(playerCont.getEntityContainer(1),m);
             }
         });
 
@@ -106,10 +106,6 @@ public class GameControllers extends javax.swing.JFrame {
         neutral_map.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	System.out.println("You clicked neutral map");
-                
-                String playerInfo = "Player X: ";
-                player_info.setText(playerInfo);
-                jScrollPane3.setViewportView(player_info);
             }
         });
 
@@ -117,16 +113,12 @@ public class GameControllers extends javax.swing.JFrame {
         player1_map.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                boolean re = ai.checkMove(2, 2, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
+                /*boolean re = ai.checkMove(2, 2, playerCont.getEntityFromPlayerWithIndex(1, 0),m);
                 if(re){
                 	System.out.println("Bastýðýn yere gider");
                 }else{
                 	System.out.println("Gidemez");
-                }
-                
-                String playerInfo = "Player X: ";
-                player_info.setText(playerInfo);
-                jScrollPane3.setViewportView(player_info);
+                }*/
             }
         });
 
@@ -137,9 +129,23 @@ public class GameControllers extends javax.swing.JFrame {
             	panel.revalidate();
             	Tile t;
             	t = gamePanel.getSelectedTile();
-            	String tileInfo = "\nTile info at x: 1, y: 2\nHealth : " + t.getHitpoint()*t.getType() + "\nI got the tile. \nIt works!";
+            	String tileInfo = "Tile info at x: " + t.getX() + ", y: " + t.getY() + "\nHealth : " + t.getHitpoint()*t.getType() + "\nI got the tile. \nIt works!";
                 tile_info.setText(tileInfo);
                 jScrollPane1.setViewportView(tile_info);
+                
+                String playerInfo;
+                
+                if (t.getOwner() == 0)
+                {
+                	playerInfo = "Neutral Map: --\n\nIncome: --\nTotal Gold: --";
+                }
+                else
+                {
+                	playerInfo = "Player " + t.getOwner() + ":\n\nIncome: " + playerCont.getPlayer(t.getOwner()).getRevenue() + "\nTotal Gold: " + playerCont.getPlayer(t.getOwner()).getTreasure();
+                }
+                
+                player_info.setText(playerInfo);
+                jScrollPane3.setViewportView(player_info);
                 
             }
         });

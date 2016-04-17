@@ -1,0 +1,57 @@
+package Controllers;
+
+import ai.*;
+import c461a.EntityModels.*;
+import Models.*;
+import c461a.EntityModels.*;
+public class AIController {
+	ProductionAI productionAI;
+	EntityContainer enemyBuild;
+	EntityContainer enemyUnit;
+	private int turnNumber;
+	public AIController(){
+		turnNumber = 0;
+		productionAI = new ProductionAI();
+	}
+	public void CalculateSituation(Map m, int owner, EntityContainer em){
+		for(int x = 0;x<60;x++){
+			for(int y = 0;y<60;y++){
+				if(m.getTile(x, y).getOwner()!=owner&&m.getTile(x, y).getOwner()!=0){
+					if(m.getTile(x, y).getEntity()<=6){
+						enemyBuild.Create(x, y, m.getTile(x, y).getEntity());
+					}else if(m.getTile(x, y).getEntity()<=11){
+						enemyUnit.Create(x, y, m.getTile(x, y).getEntity());
+					}
+				}
+			}
+		}
+		CalculateInfluence(enemyBuild, enemyUnit, em, m);
+		
+		
+		
+	}
+	
+	public void CalculateInfluence(EntityContainer eb, EntityContainer eu, EntityContainer em, Map m){
+		
+	}
+	
+	
+	public void DirectAI(EntityContainer ec, Map m){
+		if(ec.getSize()==0){
+			return;
+		}
+		if(ec.getEntityFromIndex(0).getClass()==Building.class){
+			if(ec.getEntityFromIndex(0).getCounter()==0){
+				ec.BackToEndOfQueue();
+			}else{
+				productionAI.ProductiveMove(ec.getEntityFromIndex(0), m);
+			}
+		}else if(ec.getEntityFromIndex(0).getClass()==Worker.class){
+			productionAI.ProductiveMove(ec.getEntityFromIndex(0), m);
+		}else{
+			
+		}
+	}
+	
+	
+}

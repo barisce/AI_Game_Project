@@ -1,7 +1,7 @@
 package c461a.EntityModels;
 
 public class Town extends Building {
-	Town(){
+	public Town(){
 		this.setName("Town");
 		this.setType("Building");
 		this.setMaxHp(4000);
@@ -9,7 +9,7 @@ public class Town extends Building {
 		this.setMaintenance(10);
 		this.setSightRange(15);
 	}
-	Town(int x, int y){
+	public Town(int x, int y){
 		this.setX(x);
 		this.setY(y);
 		this.setName("Town");
@@ -19,5 +19,17 @@ public class Town extends Building {
 		this.setMaintenance(10);
 		this.setSightRange(15);
 	}
+	public Town(int x, int y,int owner){
+		this.setX(x);
+		this.setY(y);
+		this.setName("Town");
+		this.setType("Building");
+		this.setMaxHp(4000);
+		this.setCurrentHp(4000);
+		this.setMaintenance(10);
+		this.setSightRange(15);
+		this.setOwner(owner);
+	}
+	
 
 }

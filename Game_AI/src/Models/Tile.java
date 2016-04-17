@@ -1,7 +1,6 @@
 package Models;
 import java.io.IOException;
 
-
 public class Tile {
 	// Properties
 	public int x;
@@ -11,18 +10,22 @@ public class Tile {
 	public int entity;
 	public int index;
 	private int hitpoint;
+	private int influence;
+	private boolean found;
 	//private Terrain terrain;
-	// Constructors
 	
+	// Constructors
 	public Tile() throws IOException{
 		//terrain = new Terrain();
 		this.x = -1;
 		this.y = -1;
-		this.type = -1;
-		this.owner = -1;
-		this.entity = -1;
+		this.type = 0;
+		this.owner = 0;
+		this.entity = 0;
 		this.index = -1;
 		this.hitpoint = -100;
+		this.found = true;
+		this.influence = 0;
 	}
 	
 	public Tile(int x, int y) throws IOException{
@@ -33,6 +36,8 @@ public class Tile {
 		this.entity = 0;
 		this.owner = 0;
 		this.hitpoint = 100;
+		this.found = true;
+		this.influence = 0;
 	}
 	
 	public Tile(int x, int y, int type) throws IOException{
@@ -43,6 +48,8 @@ public class Tile {
 		this.entity = 0;
 		this.owner = 0;
 		this.hitpoint = 100;
+		this.found = true;
+		this.influence = 0;
 	}
 	public Tile(int x, int y, int type,int entity, int owner) throws IOException{
 		//terrain = new Terrain(type);
@@ -52,6 +59,8 @@ public class Tile {
 		this.entity = entity;
 		this.owner = owner;
 		this.hitpoint = 100;
+		this.found = true;
+		this.influence = 0;
 	}
 	
 	
@@ -60,11 +69,21 @@ public class Tile {
 		//terrain = new Terrain(type);
 		this.type = type;
 		this.hitpoint = 100;
+		this.found = true;
+		this.influence = 0;
 	}
 
 	
 	// Methods
 	// Getter
+	
+	public boolean isFound(){
+		return found;
+	}
+	
+	public void setFound(boolean found) {
+		this.found = found;
+	}
 	
 	public int getIndex() {
 		return index;
@@ -129,6 +148,18 @@ public class Tile {
 	public void setType(int type) throws IOException {
 		this.type = type;
 		//this.terrain = new Terrain(type);
+	}
+
+	public void addInfluence(int i, int player) {
+		if( player == 0)
+			influence = influence + i;
+		else
+			influence = influence - i;
+	}
+
+	public int getInfluence() {
+		// TODO Auto-generated method stub
+		return this.influence;
 	}
 	
 	// modifiers

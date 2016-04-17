@@ -29,6 +29,21 @@ public class Range extends Unit {
 		this.setMoveLeft(0);
 		this.setSightRange(10);
 	}
+	public Range(int x, int y, int owner){
+		this.setX(x);
+		this.setY(y);
+		this.setName("Range");
+		this.setType("Range");
+		this.setMaxHp(500);
+		this.setCurrentHp(500);
+		this.setKills(0);
+		this.setDamage(200);
+		this.setRange(3);
+		this.setMoveMax(5);
+		this.setMoveLeft(0);
+		this.setSightRange(10);
+		this.setOwner(owner);
+	}
 	
 	public int getRange() {
 		return range;

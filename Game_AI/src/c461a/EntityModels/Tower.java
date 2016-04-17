@@ -3,7 +3,7 @@ package c461a.EntityModels;
 public class Tower extends Building{
 	private int damage;
 	private int range;
-	Tower(){
+	public Tower(){
 		this.setName("Tower");
 		this.setType("Building");
 		this.setMaxHp(4000);
@@ -13,7 +13,7 @@ public class Tower extends Building{
 		this.setRange(5);
 		this.setDamage(300);
 	}
-	Tower(int x, int y){
+	public Tower(int x, int y){
 		this.setX(x);
 		this.setY(y);
 		this.setName("Tower");
@@ -24,6 +24,19 @@ public class Tower extends Building{
 		this.setSightRange(15);
 		this.setRange(5);
 		this.setDamage(300);
+	}
+	public Tower(int x, int y, int owner){
+		this.setX(x);
+		this.setY(y);
+		this.setName("Tower");
+		this.setType("Building");
+		this.setMaxHp(4000);
+		this.setCurrentHp(4000);
+		this.setMaintenance(-5);
+		this.setSightRange(15);
+		this.setRange(5);
+		this.setDamage(300);
+		this.setOwner(owner);
 	}
 	
 	

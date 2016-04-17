@@ -1,0 +1,48 @@
+package ai;
+
+import Models.*;
+
+import java.util.ArrayList;
+
+import Controllers.*;
+
+public class BattleAI {
+
+	
+	PlayerController player;
+	Map				m;
+	ArrayList<Move> movesList;
+		
+	// Constructor
+	public BattleAI() 
+	{
+		
+	}
+	
+	// Methods
+	public boolean checkMoveFix(int x, int y, int ex, int ey, Map m){
+		if(m.getTile(ex, ey).getEntity()!=0){
+			return false;
+		}
+		if(ex == x && ey == y){
+			return true;
+		}
+		boolean result = false;
+		if(Math.abs(ex+1-x)<Math.abs(ex-x)){
+			result = result || checkMoveFix(x,y,ex+1,ey,m);
+			if(result)
+				return result;
+		}else if(Math.abs(ex-1-x)<Math.abs(ex-x)){
+			result = result || checkMoveFix(x,y,ex-1,ey,m);
+			if(result)
+				return result;
+		}else if(Math.abs(ey+1-y)<Math.abs(ey-y)){
+			result = result || checkMoveFix(x,y,ex,ey+1,m);
+			if(result)
+				return result;
+		}else if(Math.abs(ey-1-y)<Math.abs(ey-y)){
+			result = result || checkMoveFix(x,y,ex,ey-1,m);
+		}
+		return result;
+	}
+}

@@ -73,15 +73,15 @@ public class GamePanel extends JPanel implements Runnable {
 		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/empty.png")));
 		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/town.png")));
 		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/tower.png")));
-		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/warrior.png")));
-		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/worker.png")));
-		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/archer.png")));
-		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/barracks.png")));
-		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/cavalry.png")));
 		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine1.png")));
 		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/mine2.png")));
-		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/siege.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/barracks.png")));
 		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/tile_improvement.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/warrior.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/archer.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/cavalry.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/siege.png")));
+		entities.add(ImageIO.read(new File(System.getProperty("user.dir") + "/assets/worker.png")));
 		
 		
 		System.out.println("other constructor");
@@ -199,9 +199,19 @@ public class GamePanel extends JPanel implements Runnable {
 		{
 			for (int j = 0; j < 60; j++ )
 			{
-				g.drawImage(texture.get(m.getTile(i, j).getType()), i*32, j*32, null);
-				g.drawImage(ownership.get(m.getTile(i, j).getOwner()), i*32, j*32, null);
-				g.drawImage(entities.get(m.getTile(i, j).getEntity()), i*32, j*32, null);
+				if (m.getTile(i, j).isFound())
+				{
+					g.drawImage(texture.get(m.getTile(i, j).getType()), i*32, j*32, null);
+					g.drawImage(ownership.get(m.getTile(i, j).getOwner()), i*32, j*32, null);
+					g.drawImage(entities.get(m.getTile(i, j).getEntity()), i*32, j*32, null);
+				}
+				else
+				{
+					//not explored yet so draw null
+					g.drawImage(texture.get(0), i*32, j*32, null);
+					g.drawImage(ownership.get(0), i*32, j*32, null);
+					g.drawImage(entities.get(0), i*32, j*32, null);
+				}
 			}
 		}
 		g.drawString("FPS: " + averageFPS, 10, 10);

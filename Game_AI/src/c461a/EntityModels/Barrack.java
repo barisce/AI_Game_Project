@@ -1,7 +1,7 @@
 package c461a.EntityModels;
 
 public class Barrack extends Building{
-	Barrack(){
+	public Barrack(){
 		this.setName("Barrack");
 		this.setType("Building");
 		this.setMaxHp(3000);
@@ -9,7 +9,7 @@ public class Barrack extends Building{
 		this.setMaintenance(-5);
 		this.setSightRange(5);
 	}
-	Barrack(int x, int y){
+	public Barrack(int x, int y){
 		this.setX(x);
 		this.setY(y);
 		this.setName("Barrack");
@@ -18,5 +18,16 @@ public class Barrack extends Building{
 		this.setCurrentHp(3000);
 		this.setMaintenance(-5);
 		this.setSightRange(5);
+	}
+	public Barrack(int x, int y,int owner){
+		this.setX(x);
+		this.setY(y);
+		this.setName("Barrack");
+		this.setType("Building");
+		this.setMaxHp(3000);
+		this.setCurrentHp(3000);
+		this.setMaintenance(-5);
+		this.setSightRange(5);
+		this.setOwner(owner);
 	}
 }
